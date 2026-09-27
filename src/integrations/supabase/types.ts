@@ -14,7 +14,123 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      invoice_items: {
+        Row: {
+          created_at: string
+          id: string
+          invoice_id: string
+          matched_service_id: string | null
+          position: number
+          quantity: number
+          service_name: string
+          unit_label: string
+          unit_price: number | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          invoice_id: string
+          matched_service_id?: string | null
+          position?: number
+          quantity?: number
+          service_name: string
+          unit_label?: string
+          unit_price?: number | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          invoice_id?: string
+          matched_service_id?: string | null
+          position?: number
+          quantity?: number
+          service_name?: string
+          unit_label?: string
+          unit_price?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "invoice_items_invoice_id_fkey"
+            columns: ["invoice_id"]
+            isOneToOne: false
+            referencedRelation: "invoices"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "invoice_items_matched_service_id_fkey"
+            columns: ["matched_service_id"]
+            isOneToOne: false
+            referencedRelation: "services"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      invoices: {
+        Row: {
+          approved_at: string | null
+          created_at: string
+          customer_email: string
+          customer_name: string
+          gst_percent: number
+          id: string
+          invoice_number: string
+          notes: string
+          raw_requirement: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          approved_at?: string | null
+          created_at?: string
+          customer_email?: string
+          customer_name?: string
+          gst_percent?: number
+          id?: string
+          invoice_number?: string
+          notes?: string
+          raw_requirement?: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          approved_at?: string | null
+          created_at?: string
+          customer_email?: string
+          customer_name?: string
+          gst_percent?: number
+          id?: string
+          invoice_number?: string
+          notes?: string
+          raw_requirement?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      services: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+          unit_label: string
+          unit_price: number
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name: string
+          unit_label?: string
+          unit_price: number
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+          unit_label?: string
+          unit_price?: number
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
