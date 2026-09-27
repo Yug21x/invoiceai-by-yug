@@ -371,7 +371,7 @@ function Composer() {
 
                   <div className="mt-5 flex items-center justify-between gap-4">
                     <span className="font-mono text-[11px] text-muted">
-                      Subtotal at 18% GST:{" "}
+                      Estimated total incl. 18% GST:{" "}
                       <span className="text-ink">{formatCurrency(totals?.grandTotal ?? 0)}</span>
                     </span>
                     <button
