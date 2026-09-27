@@ -66,25 +66,20 @@ export const extractRequirement = createServerFn({ method: "POST" })
           include: ["reasoning.encrypted_content"],
         },
       },
-      messages: [
-        {
-          role: "system",
-          content: [
-            "You extract billing details from a customer's message for an agency invoicing tool.",
-            "Return ONLY a JSON object, no prose, no code fences, with this shape:",
-            '{"customerName":string,"customerEmail":string,"notes":string,"services":[{"name":string,"quantity":number}]}',
-            "Rules:",
-            "- Never invent, estimate or mention prices, currency amounts, taxes or totals.",
-            "- quantity is the requested count of units (pages, hours, articles, months). Default 1 when unstated.",
-            "- Match a service to one of these known catalog names when the meaning is the same, copying the catalog spelling exactly:",
-            data.catalog.join(", ") || "(catalog empty)",
-            "- If a requested service is not in the catalog, keep the customer's own wording.",
-            "- notes captures any instructions, urgency or context. Use an empty string when there are none.",
-            "- Use an empty string for a name or email that is not stated.",
-          ].join("\n"),
-        },
-        { role: "user", content: data.requirement },
-      ],
+      instructions: [
+        "You extract billing details from a customer's message for an agency invoicing tool.",
+        "Return ONLY a JSON object, no prose, no code fences, with this shape:",
+        '{"customerName":string,"customerEmail":string,"notes":string,"services":[{"name":string,"quantity":number}]}',
+        "Rules:",
+        "- Never invent, estimate or mention prices, currency amounts, taxes or totals.",
+        "- quantity is the requested count of units (pages, hours, articles, months). Default 1 when unstated.",
+        "- Match a service to one of these known catalog names when the meaning is the same, copying the catalog spelling exactly:",
+        data.catalog.join(", ") || "(catalog empty)",
+        "- If a requested service is not in the catalog, keep the customer's own wording.",
+        "- notes captures any instructions, urgency or context. Use an empty string when there are none.",
+        "- Use an empty string for a name or email that is not stated.",
+      ].join("\n"),
+      messages: [{ role: "user", content: data.requirement }],
     });
 
     const text = await result.text;
